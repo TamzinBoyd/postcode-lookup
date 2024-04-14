@@ -16,7 +16,7 @@ const TabContainer = () => {
 	return (
 		<div>
 			<section className='delivery'>
-				<div className='delivery__tabs-container fle'>
+				<div className='delivery__tabs-container flex'>
 					<TabHeading
 						text={TabOptions.postal}
 						isSelected={selectedTab === TabOptions.postal}

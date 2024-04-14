@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import FormLabel from "./form/FormLabel";
 import FormError from "./form/FormError";
 import FormInput from "./form/FormInput";
+import Button from "./Button";
 
 export interface FormValues {
 	name: string;
@@ -128,12 +129,7 @@ const ManualAddessForm: React.FC = () => {
 				/>
 				{errors.postcode && <FormError message={errors.postcode} />}
 			</div>
-			<button
-				type='submit'
-				className='py-2 px-8 w-56 h-11 bg-gray-700 uppercase text-sm text-gray-100 font-bold'
-			>
-				{"Save Address >"}
-			</button>
+			<Button type="submit" ariaLabel="Save Address">{"Save Address >"}</Button>
 		</form>
 	);
 };
