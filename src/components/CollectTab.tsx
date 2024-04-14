@@ -50,7 +50,6 @@ const CollectTab = () => {
 	const fetchAddressess = () => {
 		addressSearch(postcode)
 			.then((responseData) => {
-				console.log(responseData);
 				if (responseData.length > 0) {
 					setData(responseData);
 					setShowError(false);
@@ -102,6 +101,8 @@ const CollectTab = () => {
 					closeModal={() => setModalOpen(false)}
 					postcode={postcode}
 					data={data}
+					error={error}
+					showError={showError}
 				/>
 			)}
 		</div>

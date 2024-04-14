@@ -10,14 +10,14 @@ const SelectedAddressCard: FunctionComponent<Props> = ({ address }) => {
 
 	return (
 		<div className="mb-4">
-			<Typography tag='p' classname='font-bold mb-2'>
+			<Typography tag='p' classname='font-bold mb-1'>
 				{address.name}
 			</Typography>
-			<p className="text-xs">{name},</p>
-			<p className="text-xs">{line1},</p>
-            <p className="text-xs">{town},</p>
-            <p className="text-xs">{county},</p>
-            <p className="text-xs">{postcode}</p>
+			<p className="text-xs leading-normal">{name},</p>
+			<p className="text-xs leading-normal">{line1},</p>
+            <p className="text-xs leading-normal">{town},</p>
+            <p className="text-xs leading-normal">{county},</p>
+            <p className="text-xs leading-normal">{postcode}</p>
 		</div>
 	);
 };

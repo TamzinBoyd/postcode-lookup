@@ -7,6 +7,7 @@ import AddressCard from "./AddressCard/AddressCard";
 import SelectedAddressCard from "./AddressCard/SelectedAddressCard";
 import DeliveryOptionCard from "./DeliveryOptionCard";
 import OpeningTimesCard from "./OpeningTimesCard";
+import MapComponent from "./Map";
 
 interface Props {
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -14,6 +15,8 @@ interface Props {
 	closeModal: React.Dispatch<React.SetStateAction<boolean>>;
 	postcode: string;
 	data: DataProps[] | null;
+	error: string;
+	showError: boolean;
 }
 const CollectModal: FunctionComponent<Props> = ({
 	handleSubmit,
@@ -21,6 +24,8 @@ const CollectModal: FunctionComponent<Props> = ({
 	closeModal,
 	postcode = "",
 	data,
+	error = "",
+	showError = false,
 }) => {
 	const [selectedAddress, setSelectedAddress] = useState<DataProps | null>(null);
 
@@ -32,7 +37,7 @@ const CollectModal: FunctionComponent<Props> = ({
 
 	return (
 		<Modal closeModal={() => closeModal(false)}>
-			<div className='flex gap-12 max-h-[550px]'>
+			<div className='flex gap-12 max-h-[1000px]'>
 				<div className='max-w-[400px]'>
 					<Typography tag='h4' classname='font-bold text-lg mb-4'>
 						Click & Collect
@@ -43,6 +48,8 @@ const CollectModal: FunctionComponent<Props> = ({
 						handleInputChange={handleInputChange}
 						postcode={postcode}
 					/>
+					{showError && <p className='text-red-500 mt-2'>{error}</p>}
+
 					<div className='mt-8 max-h-[400px] overflow-y-scroll'>
 						{data?.map((address, index) => (
 							<AddressCard
@@ -55,11 +62,11 @@ const CollectModal: FunctionComponent<Props> = ({
 					</div>
 				</div>
 				<div className=''>
-					map here
+					{selectedAddress && <MapComponent location={selectedAddress?.location}/>}
 					<div className='flex gap-8'>
 						{selectedAddress && (
 							<>
-								<div className='flex flex-col'>
+								<div className='flex flex-col min-w-48'>
 									<SelectedAddressCard
 										address={selectedAddress}
 									/>
@@ -67,7 +74,7 @@ const CollectModal: FunctionComponent<Props> = ({
 										times={selectedAddress.opening_times}
 									/>
 								</div>
-								<div className="max-h-[500px] overflow-auto">
+								<div className="max-h-[300px] overflow-auto">
 									{selectedAddress.delivery_options.map(
 										(option, index) => (
 											<DeliveryOptionCard
