@@ -7,18 +7,29 @@ interface Props {
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	postcode: string;
-    label: string;
+	label: string;
+	buttonText: string;
+	showManualLink?: boolean;
+	handleManualFormClick?: () => void;
 }
 const PostCodeSearch: FunctionComponent<Props> = ({
 	handleSubmit,
 	handleInputChange,
 	postcode,
-    label,
+	label,
+	buttonText,
+	showManualLink = false,
+	handleManualFormClick,
 }) => {
 	return (
-		<>
-			<Typography tag='p' classname="font-bold mb-2">{label}</Typography>
-			<form onSubmit={handleSubmit} className='flex h-12'>
+		<div className="postcode-search">
+			<Typography tag='p' classname='font-bold mb-2'>
+				{label}
+			</Typography>
+			<form
+				onSubmit={handleSubmit}
+				className={`flex items-start ${showManualLink && "flex-col"}`}
+			>
 				<label htmlFor='postcodeInput' className='hidden'>
 					Postcode address search
 				</label>
@@ -30,11 +41,21 @@ const PostCodeSearch: FunctionComponent<Props> = ({
 					value={postcode}
 					placeholder='Enter your postcode'
 				/>
+				{showManualLink && (
+					<button
+						type='button'
+						onClick={handleManualFormClick}
+						aria-label='Open manual address form'
+						className='underline text-xs hover:text-gray-500 mt-2 mb-6'
+					>
+						{"Enter address manually >"}
+					</button>
+				)}
 				<Button type='submit' ariaLabel='Search' classes='h-12'>
-					{"Search >"}
+					{buttonText}
 				</Button>
 			</form>
-		</>
+		</div>
 	);
 };
 

@@ -1,135 +1,114 @@
 import React, { FunctionComponent, useState } from "react";
-import PlacesAutocomplete, {
-	geocodeByAddress,
-} from "react-places-autocomplete";
 import ManualAddressForm from "./ManualAddressForm";
 import GiftSelect from "./GiftSelect";
-import FormLabel from "./form/FormLabel";
-import FormInput from "./form/FormInput";
+import { addressSearch } from "../services/addressSearch";
+import PostCodeSearch from "./PostCodeSearch";
+import AddressDropdown from "./AddressDropdown";
+import { DataProps } from "./CollectTab";
+import PostalForm from "./PostalForm";
 
 const PostalTab: FunctionComponent = () => {
-	const [address, setAddress] = useState("");
-	const [selectedAddress, setSelectedAddress] = useState({
-		address_line_1: "",
-		address_line_2: "",
-		city: "",
-		postcode: "",
-	});
-	const [isError, setIsError] = useState(false);
+	const [error, setError] = useState("");
+	const [showError, setShowError] = useState(false);
 	const [manualOpen, setManualOpen] = useState(false);
+	const [showForm, setShowForm] = useState(false);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [isGift, setIsGift] = useState(false);
 
-	const handleSelect = async (value: string) => {
-		setIsError(false);
-		const results = await geocodeByAddress(value);
-		const addressComponents = results[0].address_components;
-		const formattedAddress = {
-			address_line_1:
-				addressComponents[0]?.long_name ??
-				"" + " " + addressComponents[1]?.long_name ??
-				"",
-			address_line_2: addressComponents[2]?.long_name ?? "",
-			city: addressComponents[3]?.long_name ?? "",
-			postcode:
-				addressComponents[addressComponents.length - 1]?.short_name ??
-				"",
-		};
-		setSelectedAddress(formattedAddress);
-		setAddress(value);
+	const [postcode, setPostcode] = useState("");
+	const [data, setData] = useState<DataProps[] | null>(null);
+	const [selectedAddress, setSelectedAddress] = useState<DataProps | null>(
+		null,
+	);
+	const [formSubmitted, setFormSubmitted] = useState(false);
+
+	const fetchAddressess = () => {
+		addressSearch(postcode)
+			.then((responseData) => {
+				if (responseData.length > 0) {
+					setData(responseData);
+					setShowError(false);
+				} else {
+					setShowError(true);
+					setError("No results found");
+				}
+			})
+			.catch((error) => {
+				setError(error.message);
+				setShowError(true);
+			});
 	};
+
+	const handlePostcodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPostcode(e.target.value);
+	};
+
+	const handlePostcodeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const target = e.target as typeof e.target & {
+			postcodeInput: HTMLInputElement;
+		};
+		const postcode = target.postcodeInput.value.trim();
+
+		if (!postcode) {
+			setError("Please enter a postcode");
+			setShowError(true);
+			return;
+		}
+
+		fetchAddressess();
+		setDropdownOpen(true);
+	};
+
+	const handleAddressClick = (address: DataProps) => {
+		setSelectedAddress(address);
+		setDropdownOpen(false);
+		setShowForm(true);
+	};
+
+	const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setFormSubmitted(true);
+		const formData = new FormData(e.target as HTMLFormElement);
+		const completeForm = {
+			firstName: formData.get("firstName"),
+			lastName: formData.get("surname"),
+			address: selectedAddress,
+			isGift
+		}
+		console.log("Form submitted:", completeForm);
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	}
 
 	return (
 		<div className='postal-tab__container pt-10'>
+			{formSubmitted && <p className='text-green-500 mb-2'>Form submitted successfully!</p>}
+
 			{!manualOpen && (
-				<div>
-					<PlacesAutocomplete
-						value={address}
-						onChange={setAddress}
-						onSelect={handleSelect}
-						onError={(status, clearSuggestions) => {
-							clearSuggestions();
-							setIsError(status !== "OK");
-						}}
-					>
-						{({
-							getInputProps,
-							suggestions,
-							getSuggestionItemProps,
-							loading,
-						}) => (
-							<div>
-								<p className='text-lg font-bold text-gray-700 mb-4'>
-									Enter address
-								</p>
-								<input
-									{...getInputProps({
-										placeholder: "Type address",
-									})}
-									className='w-full h-14 p-3 mb-4 bg-gray-200 rounded-sm'
-								/>
-
-								<div>
-									{loading ? <div>...loading</div> : null}
-
-									{suggestions.map((suggestion, index) => (
-										<div
-											{...getSuggestionItemProps(
-												suggestion,
-											)}
-											key={index}
-										>
-											{suggestion.description}
-										</div>
-									))}
-
-									{isError && <p>Address not found</p>}
-								</div>
-							</div>
-						)}
-					</PlacesAutocomplete>
-					<button
-						onClick={() => setManualOpen(true)}
-						className='mb-8 underline font-bold text-sm text-gray-500 hover:text-blue-500'
-					>
-						{"Enter address manually >"}
-					</button>
-				</div>
+				<>
+					<PostCodeSearch
+						label='Enter postcode'
+						handleSubmit={handlePostcodeSubmit}
+						handleInputChange={handlePostcodeChange}
+						postcode={postcode}
+						buttonText='Look up address >'
+						showManualLink={true}
+						handleManualFormClick={() => setManualOpen(true)}
+					/>
+					{dropdownOpen && data && (
+						<AddressDropdown
+							handleAddressClick={handleAddressClick}
+							addresses={data}
+						/>
+					)}
+					{showError && <p className='text-red-500 mt-2 text-sm'>{error}</p>}
+				</>
 			)}
 
-			{manualOpen ? (
-				<ManualAddressForm />
-			) : (
-				<div>
-					<form>
-						<FormLabel text='Address line 1:' labelName='house' />
-						<FormInput
-							inputName='house'
-							value={selectedAddress.address_line_1}
-							disabled
-						/>
+			{manualOpen && <ManualAddressForm />}
 
-						<FormLabel text='Address Line 2:' labelName='line2' />
-						<FormInput
-							inputName='line2'
-							value={selectedAddress.address_line_2}
-							disabled
-						/>
-
-						<FormLabel text='City:' labelName='city' />
-						<FormInput
-							inputName='city'
-							value={selectedAddress.city}
-							disabled
-						/>
-
-						<FormLabel text='Postcode:' labelName='postcode' />
-						<FormInput
-							inputName='postcode'
-							value={selectedAddress.postcode}
-							disabled
-						/>
-					</form>
-				</div>
+			{showForm && !manualOpen && (
+				<PostalForm handleFormSubmit={handleFormSubmit} selectedAddress={selectedAddress} />
 			)}
 			<GiftSelect setIsGift={setIsGift} isGift={isGift} />
 		</div>
