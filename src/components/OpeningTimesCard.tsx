@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { OpeningTimes } from "./CollectTab";
+import { OpeningTimes } from "../types/types";
 import Typography from "./typography/Typography";
 
 interface Props {

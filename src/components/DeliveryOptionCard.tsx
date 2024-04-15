@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
-import { DeliveryOption } from "./CollectTab";
 import Typography from "./typography/Typography";
 import Button from "./Button";
+import { DeliveryOption } from "../types/types";
 
 interface Props {
 	option: DeliveryOption;

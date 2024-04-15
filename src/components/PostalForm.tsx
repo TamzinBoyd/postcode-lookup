@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from "react";
 import FormLabel from "./form/FormLabel";
 import FormInput from "./form/FormInput";
-import { DataProps } from "./CollectTab";
 import Button from "./Button";
+
+import { DataProps } from "../types/types";
 
 interface Props {
 	handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;

@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import Modal from "./modal/Modal";
-import { DataProps } from "./CollectTab";
 import Typography from "./typography/Typography";
 import PostCodeSearch from "./PostCodeSearch";
 import AddressCard from "./AddressCard/AddressCard";
@@ -8,6 +7,8 @@ import SelectedAddressCard from "./AddressCard/SelectedAddressCard";
 import DeliveryOptionCard from "./DeliveryOptionCard";
 import OpeningTimesCard from "./OpeningTimesCard";
 import MapComponent from "./Map";
+
+import { DataProps } from "../types/types";
 
 interface Props {
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;

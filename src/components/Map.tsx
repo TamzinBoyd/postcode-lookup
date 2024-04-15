@@ -1,6 +1,6 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { Location } from "./CollectTab";
+import { Location } from "../types/types";
 
 interface Props {
 	location: Location;
@@ -14,7 +14,7 @@ const MapComponent: FunctionComponent<Props> = ({ location }) => {
 
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: "AIzaSyCpL8cMBKI07YJIPbNrcT51ORAdyvF0X2s",
+		googleMapsApiKey: process.env.GOOGLEMAPS_API || "",
 	});
 
 	const onLoad = useCallback(

@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { DataProps } from "../CollectTab";
 import Typography from "../typography/Typography";
+import { DataProps } from "../../types/types";
 
 interface Props {
 	address: DataProps;

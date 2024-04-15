@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import { DataProps } from "../CollectTab";
 import AddressIcon from "./AddressIcon";
 import AddressTitle from "./AddressTitle";
 import AddressText from "./AddressText";
+import { DataProps } from "../../types/types";
 
 interface Address {
 	address: DataProps;

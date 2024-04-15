@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { DataProps } from "./CollectTab";
+import { DataProps } from "../types/types";
 
 interface Props {
 	addresses: DataProps[];

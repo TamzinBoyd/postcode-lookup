@@ -4,8 +4,9 @@ import GiftSelect from "./GiftSelect";
 import { addressSearch } from "../services/addressSearch";
 import PostCodeSearch from "./PostCodeSearch";
 import AddressDropdown from "./AddressDropdown";
-import { DataProps } from "./CollectTab";
 import PostalForm from "./PostalForm";
+
+import { DataProps } from "../types/types";
 
 const PostalTab: FunctionComponent = () => {
 	const [error, setError] = useState("");
