@@ -9,7 +9,7 @@ const SelectedAddressCard: FunctionComponent<Props> = ({ address }) => {
 	const { name, line1, town, county, postcode } = address.address;
 
 	return (
-		<div className="mb-4">
+		<div className="selected-address__card mb-4">
 			<Typography tag='p' classname='font-bold mb-1'>
 				{address.name}
 			</Typography>

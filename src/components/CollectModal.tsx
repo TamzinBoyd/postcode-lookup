@@ -37,8 +37,8 @@ const CollectModal: FunctionComponent<Props> = ({
 
 	return (
 		<Modal closeModal={() => closeModal(false)}>
-			<div className='flex gap-12 max-h-[1000px]'>
-				<div className='max-w-[400px]'>
+			<div className='collect-modal flex flex-col md:flex-row gap-2 md:gap-12 h-fit md:max-h-[1000px] pt-4 md:p-0'>
+				<div className='md:max-w-[400px]'>
 					<Typography tag='h4' classname='font-bold text-lg mb-4'>
 						Click & Collect
 					</Typography>
@@ -47,10 +47,11 @@ const CollectModal: FunctionComponent<Props> = ({
 						handleSubmit={handleSubmit}
 						handleInputChange={handleInputChange}
 						postcode={postcode}
+						buttonText="Search >"
 					/>
 					{showError && <p className='text-red-500 mt-2'>{error}</p>}
 
-					<div className='mt-8 max-h-[400px] overflow-y-scroll'>
+					<div className='addresses mt-6 pr-2 md:max-h-[450px] overflow-y-scroll'>
 						{data?.map((address, index) => (
 							<AddressCard
 								address={address}
@@ -63,7 +64,7 @@ const CollectModal: FunctionComponent<Props> = ({
 				</div>
 				<div className=''>
 					{selectedAddress && <MapComponent location={selectedAddress?.location}/>}
-					<div className='flex gap-8'>
+					<div className='flex flex-col md:flex-row gap-8'>
 						{selectedAddress && (
 							<>
 								<div className='flex flex-col min-w-48'>
@@ -74,7 +75,7 @@ const CollectModal: FunctionComponent<Props> = ({
 										times={selectedAddress.opening_times}
 									/>
 								</div>
-								<div className="max-h-[300px] overflow-auto">
+								<div className="md:max-h-[300px] overflow-auto">
 									{selectedAddress.delivery_options.map(
 										(option, index) => (
 											<DeliveryOptionCard

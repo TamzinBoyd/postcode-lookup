@@ -8,7 +8,7 @@ interface Props {
 
 const OpeningTimesCard: FunctionComponent<Props> = ({ times }) => {
 	return (
-		<div>
+		<div className="opening-times__card">
             <Typography tag="h6" classname="font-bold mb-1">Opening Times</Typography>
 			<Typography tag='p' classname='text-xs leading-normal'>
 				Mon {times.Mon}

@@ -68,7 +68,7 @@ const ManualAddessForm: React.FC = () => {
 	}, [successMessage]);
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="manual-form">
 			{successMessage && <p className="text-green-600 pb-4">Your address has been saved</p>}
 			<div className='pb-5 flex flex-col'>
 				<FormLabel text='Name' labelName='name' />

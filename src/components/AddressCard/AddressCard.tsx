@@ -19,7 +19,7 @@ const AddressCard: FunctionComponent<Address> = ({
 
 	return (
 		<button
-			className={`flex items-center gap-4 w-full border-t border-black text-left hover:bg-gray-100 ${
+			className={`address-card flex items-center gap-4 py-1 w-full border-t border-black text-left hover:bg-gray-100 ${
 				isLast && "border-b"
 			}`}
 			onClick={onClick}

@@ -7,7 +7,7 @@ interface Props {
 
 const GiftSelect: FunctionComponent<Props> = ({ setIsGift, isGift }) => {
 	return (
-		<div className='flex justify-between mt-4'>
+		<div className='gift-select flex justify-between mt-4'>
 			<div>
 				<p className='font-bold text-sm mb-1'>Is this a gift?</p>
 				<p className='text-sm'>

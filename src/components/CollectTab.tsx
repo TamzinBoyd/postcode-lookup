@@ -45,7 +45,7 @@ const CollectTab = () => {
 	const [error, setError] = useState("");
 	const [showError, setShowError] = useState(false);
 	const [postcode, setPostcode] = useState("");
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<DataProps[] | null>(null);
 
 	const fetchAddressess = () => {
 		addressSearch(postcode)
@@ -90,9 +90,10 @@ const CollectTab = () => {
 				handleSubmit={handleSubmit}
 				handleInputChange={handleInputChange}
 				postcode={postcode}
+				buttonText="Search >"
 			/>
 
-			{showError && <p className='text-red-500 mt-2'>{error}</p>}
+			{showError && <p className='text-red-500 mt-2 text-sm'>{error}</p>}
 
 			{modalOpen && (
 				<CollectModal

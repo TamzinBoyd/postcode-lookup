@@ -35,22 +35,24 @@ const MapComponent: FunctionComponent<Props> = ({ location }) => {
 	}, [location.latitude, location.longitude]);
 
 	const containerStyle = {
-		width: "500px",
+		width: "100%",
 		height: "270px",
-        marginTop: "40px",
-        marginBottom: "16px",
+		marginTop: "40px",
+		marginBottom: "16px",
 	};
 
 	return isLoaded ? (
-		<GoogleMap
-			mapContainerStyle={containerStyle}
-			center={position}
-			zoom={10}
-			onLoad={onLoad}
-			onUnmount={onUnmount}
-		>
-			<Marker position={position} />
-		</GoogleMap>
+		<div className="map w-full md:max-d-[450px]">
+			<GoogleMap
+				mapContainerStyle={containerStyle}
+				center={position}
+				zoom={10}
+				onLoad={onLoad}
+				onUnmount={onUnmount}
+			>
+				<Marker position={position} />
+			</GoogleMap>
+		</div>
 	) : (
 		<></>
 	);

@@ -16,7 +16,7 @@ const TabHeading: FunctionComponent<Props> = ({
 }) => {
 	return (
 		<button
-			className={`${wrapperClass} w-3/6 p-3 ${
+			className={`${wrapperClass} w-3/6 p-1 md:p-3 ${
 				isSelected ? "border-t border-gray-700" : ""
 			}`}
 			aria-label={`Select ${text}`}
