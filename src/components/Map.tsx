@@ -14,7 +14,7 @@ const MapComponent: FunctionComponent<Props> = ({ location }) => {
 
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: process.env.GOOGLEMAPS_API || "",
+		googleMapsApiKey: process.env.REACT_APP_GOOGLEMAPS_API || "",
 	});
 
 	const onLoad = useCallback(
